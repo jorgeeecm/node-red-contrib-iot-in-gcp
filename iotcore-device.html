@@ -1,0 +1,218 @@
+<script type="text/x-red" data-template-name="google-cloud-iotcore device">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name">
+    </div>
+    &nbsp
+
+    <div class="form-row">
+        <label for="node-input-broker"><i class="fa fa-globe"></i> Broker</label>
+        <input type="text" id="node-input-broker">
+    </div>
+    <div class="form-row">
+        <label for="node-input-topic"><i class="fa fa-mail-forward"></i>Topic</label>
+        <select id="node-input-topic" >
+            <option value=""></option>
+            <option value="events">Telemetry</option>
+            <option value="state">State</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-qos"><i class="fa fa-empire"></i> QoS</label>
+        <select id="node-input-qos" style="width:80px !important">
+            <option value=""></option>
+            <option value="0">0</option>
+            <option value="1">1</option>
+        </select>
+        <label for="node-input-retain" style="margin-left:20px;"><i class="fa fa-clock-o"></i> Retain</label>
+        <select id="node-input-retain" style="width:80px !important">
+            <option value=""></option>
+            <option value="false">No</option>
+            <option value="true">Yes</option>
+        </select>
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name='google-cloud-iotcore device'>
+    <p>This node will simulate the device register in <a href="https://cloud.google.com/iot/docs/" target="_blank">GCP IoT Core </a></p>
+    
+    <h3>Input</h3> 
+    <dl class="message-properties">
+        <dt>msg.payload
+            <span class="property-type">Telemetry/State event</span>
+        </dt>
+        <dd>The data in the message.</dd>     
+    </dl>
+    <dl class="message-properties">
+        <dt>msg.topic
+            <span class="property-type">Telemetry or State</span>
+        </dt>
+        <dd>The topic for publishing the message.</dd>     
+    </dl>
+    <dl class="message-properties">
+        <dt>msg.qos
+            <span class="property-type">Quality of Service</span>
+        </dt>
+        <dd>QoS for the message.</dd>     
+    </dl>
+
+    <h3>Outputs</h3>
+    <h4>Output1</h4>
+    <dl class="message-properties">
+        <dt>msg.payload
+            <span class="property-type">Config</span>
+        </dt>
+        <dd>Configurations received for the device.</dd>     
+    </dl>
+    <h4>Output2</h4>
+    <dl class="message-properties">
+        <dt>msg.payload
+            <span class="property-type">Commands</span>
+        </dt>
+        <dd>Commands received for the device.</dd>     
+    </dl>
+    
+    <h3>Parameters</h3>
+    <p>[Broker]: The MQTT broker that identifies the device and allow the connection</p>
+    <p>[Topic]: The default topic where the messages will be published, it will be taken in case no topic or invalid topic provided in the input (msg.topic)</p>
+    <p>[QoS]: The default QoS in case no one or invalid one provided in the input (msg-qos)</p>
+    <p>[Retain]: set this to true if you want the broker to retain the last message in case it has not delivered</p>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('google-cloud-iotcore device',{
+        category: 'GCP IoT',
+        defaults: {
+            name: {value:""},
+            qos: {value: "0"},
+            retain: {value:""},
+            topic: {value:"events"},
+            broker: {type:"google-cloud-iotcore broker", required:true}
+        },
+        color: "#0E7FDE",
+        inputs:1,
+        outputs:2,
+        icon: "iotcore.png",
+        align: "left",
+        label: function() {
+            return this.name|| "google-cloud-iotcore device";
+        },
+        labelStyle: function() {
+            return this.name?"node_label_italic":"";
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name='google-cloud-iotcore broker'>
+    <div class="form-row">
+        <label for="node-config-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-config-input-name">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-brokerHost"><i class="fa fa-rss"></i> BrokerHost</label>
+        <input class="input-append-left" type="text" id="node-config-input-brokerHost" style="width:170px !important">
+        <label for="node-config-input-brokerPort" style="margin-left:20px;"> <i class="fa fa-plug"></i> BrokerPort</label>
+        <input type="text" id="node-config-input-brokerPort" style="width:60px !important">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-commandsQos"><i class="fa fa-globe"></i> Commands QoS</label>
+        <select class="input-append-left" id="node-config-input-commandsQos" style="width:80px !important">
+            <option value="0">0</option>
+            <option value="1">1</option>
+        </select>
+        <label for="node-config-input-configQos" style="margin-left:40px;"><i class="fa fa-globe"></i> Configuration QoS</label>
+        <select class="input-append-left" id="node-config-input-configQos" style="width:80px !important">
+            <option value="0">0</option>
+            <option value="1">1</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-projectId"><i class="fa fa-tag"></i> ProjectId</label>
+        <input type="text" id="node-config-input-projectId">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-region"><i class="fa fa-map-marker"></i> Region</label>
+        <input type="text" id="node-config-input-region">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-registryId"><i class="fa fa-tag"></i> RegistryId</label>
+        <input type="text" id="node-config-input-registryId">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-deviceId"><i class="fa fa-tag"></i> DeviceId</label>
+        <input type="text" id="node-config-input-deviceId">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-algorithm"><i class="fa fa-code"></i> Algorithm</label>
+        <input type="text" id="node-config-input-algorithm">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-privateKeyFile"><i class="fa fa-key"></i> KeyFile Path</label>
+        <input type="text" id="node-config-input-privateKeyFile">
+    </div>
+    
+    &nbsp
+    &nbsp
+    <div class="form-row">
+        <h2> MQTT CLIENT CONFIGURATION </h2>
+    </div>
+    &nbsp
+
+    <div class="form-row">
+        <label for="node-config-input-clean" "> <i class="fa fa-recycle"></i> Clean</label>
+        <select id="node-input-clean" style="width:90px !important">
+            <option value="true">Yes</option>
+            <option value="false">No</option>
+        </select>
+        <label for="node-config-input-reconnectPeriod" style="margin-left:20px;"> <i class="fa fa-refresh"></i> Reconnect</label>
+        <input class="input-append-left" type="text" id="node-config-input-reconnectPeriod" style="width:90px !important">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-keepAlive"><i class="fa fa-clock-o"></i> Keep Alive</label>
+        <input class="input-append-left" type="text" id="node-config-input-keepAlive" style="width:90px !important">
+        <label for="node-config-input-connectTimeout" style="margin-left:20px;"><i class="fa fa-clock-o"></i> Timeout</label>
+        <input class="input-append-left" type="text" id="node-config-input-connectTimeout" style="width:90px !important">
+        
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name='google-cloud-iotcore broker'>
+    <p>Host and port is already set to the Google IoT MQTT broker (no need to change)</p>
+    <p>Quality of Service (QoS) for both commands and configuration subscribtion is set to the recomended values</p>
+    <p>The following parameters are required in order to identify the device you are aiming.</p>
+    <p>The encryption algorithm is setted to default for IoT Core.</p>
+    <p>KeyFile Path you must specified the full path to the private key file (normally .pem) used to identify the device.</p>
+    <p>By default the MQTT clietn parameters are configured and do not need any changes for a working solution</p>
+    <p>[Keep Alive]: in seconds, set to 0 to disable</p>
+    <p>[Clean]: set to false to receive QoS 1 and 2 messages while offline</p>
+    <p>[Reconnect]:i nterval between two reconnections, in milliseconds</p>
+    <p>[Timeout]: time to wait before a CONNACK is received, in milliseconds </p>
+    <p>For more information about MQTT client check the <a href="https://github.com/mqttjs/MQTT.js#example" target="_blank">package GitHub repo</a> </p>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('google-cloud-iotcore broker',{
+        category: 'config',
+        defaults: {
+            name: {value:""},
+            commandsQos: {value:"0", requiered: false},
+            configQos: {value:"1", requiered: false},
+            brokerHost: {value:"mqtt.googleapis.com",required:true},
+            brokerPort: {value:"8883",required:true},
+            projectId: {value:"",required:true},
+            region: {value:"",required:true},
+            registryId: {value:"",required:true},
+            deviceId: {value:"",required:true},
+            algorithm: {value:"RS256",required:true},
+            privateKeyFile: {value:"",required:true},
+            keepAlive: {value:"60",required:true},
+            reconnectPeriod: {value:"5000",required:true},
+            connectTimeout: {value:"30000",required:true},
+            clean: {value:"true",required:true}
+
+        },
+        label: function() {
+            return this.name|| "google-cloud-iotcore broker";
+        }
+    });
+</script>

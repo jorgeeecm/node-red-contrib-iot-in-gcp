@@ -1,0 +1,130 @@
+<script type="text/x-red" data-template-name="google-cloud-bigquery retrieve">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name">
+    </div>
+    &nsbp;
+    
+    <div class="form-row">
+        <label for="node-input-account"><i class="fa fa-user"></i> Credentials</label>
+        <input type="text" id="node-input-account">        
+    </div>
+    <div class="form-row">
+        <label for="node-input-keyFilename"><i class="fa fa-user"></i> Key File</label>
+        <input type="text" id="node-input-keyFilename">
+    </div>
+    <div class="form-row">
+        <label for="node-input-projectId"><i class="fa fa-cloud"></i> Project</label>
+        <input type="text" id="node-input-projectId">
+    </div>
+    
+</script>
+
+<script type="text/x-red" data-help-name="google-cloud-bigquery retrieve">
+    <p>Execute a query in <a href="https://cloud.google.com/bigquery/docs/" target="_blank">GCP BigQuery </a> for a given project.</p>
+    <h3>Input</h3>
+    <dl class="message-properties">
+        <dt>msg.payload
+            <span class="property-type">string</span>
+        </dt>
+        <dd>The query to be executed.</dd>
+    </dl>
+    <h3>OutPut</h3>
+    <dl class="message-properties">
+        <dt>msg.payload
+            <span class="property-type">JSON</span>
+        </dt>
+        <dd>The result of the query in JSON format</dd>
+    </dl>
+</script>
+
+<script type="text/javascript">
+RED.nodes.registerType("google-cloud-bigquery retrieve", {
+    category: "GCP IoT",
+    defaults: {
+        account: { type: "google-cloud-credentials", required: false },
+        keyFilename: { value: "", required: false },
+        projectId: { value: "", required: true},
+        name: { value: "", required: false }
+    },
+    inputs: 1,
+    outputs: 1,
+    icon: "bigquery.png",
+    align: "left",
+    color: "#31A14E",
+    label: function () {
+        return this.name || "bigquery query";
+    },
+    paletteLabel: "bigquery query"
+});
+</script>
+
+<script type="text/x-red" data-template-name="google-cloud-bigquery store">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name">
+    </div>
+    &nsbp;
+
+    <div class="form-row">
+        <label for="node-input-account"><i class="fa fa-user"></i> Credentials</label>
+        <input type="text" id="node-input-account">        
+    </div>
+    <div class="form-row">
+        <label for="node-input-keyFilename"><i class="fa fa-user"></i> Key File</label>
+        <input type="text" id="node-input-keyFilename">
+    </div>
+    <div class="form-row">
+        <label for="node-input-projectId"><i class="fa fa-cloud"></i> Project</label>
+        <input type="text" id="node-input-projectId">
+    </div>
+    <div class="form-row">
+        <label for="node-input-datasetId"><i class="fa fa-database"></i> Dataset</label>
+        <input type="text" id="node-input-datasetId">
+    </div>
+    <div class="form-row">
+        <label for="node-input-tableId"><i class="fa fa-table"></i> Table</label>
+        <input type="text" id="node-input-tableId">
+    </div>
+  
+</script>
+
+<script type="text/x-red" data-help-name="google-cloud-bigquery store">
+    <p>Store data in <a href="https://cloud.google.com/bigquery/docs/" target="_blank">GCP BigQuery </a> in a given table.</p>
+    <h3>Input</h3>
+    <dl class="message-properties">
+        <dt>msg.payload
+            <span class="property-type">JSON/JSON array</span>
+        </dt>
+        <dd>The data to be stored in JSON format.</dd>
+        <dd>Example: [{name: 'Tom', age: 30}, {name: 'Jane', age: 32}]</dd>
+    </dl>
+    <h3>Parameters</h3>
+    <p>[Credentials]: The service account in json format for allowing the acces to the </p>
+    <p>[Key File]: The full path to the file with the service acoount information (.json)</p>
+    <p>[Project Id]: The GCP project in which the dataset and table could be found</p>
+    <p>[Dataset Id]: The dataset where the table is located</p>
+    <p>[Dataset Id]: The table in where the information wants to be stored</p>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType("google-cloud-bigquery store", {
+        category: "GCP IoT",
+        defaults: {
+            account: { type: "google-cloud-credentials", required: false },
+            keyFilename: { value: "", required: false },
+            projectId: { value: "", required: true},
+            datasetId: { value: "", required: true},
+            tableId: { value: "", required: true},
+            name: { value: "", required: false }
+        },
+        inputs: 1,
+        icon: "bigquery.png",
+        align: "right",
+        color: "#31A14E",
+        label: function () {
+            return this.name || "bigquery store";
+        },
+        paletteLabel: "bigquery store"
+    });
+    </script>

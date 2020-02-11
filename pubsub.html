@@ -1,0 +1,61 @@
+<script type="text/x-red" data-template-name="google-cloud-pubsub receive">
+    <div class="form-row">
+        <label for="node-input-account"><i class="fa fa-user"></i> Credentials</label>
+        <input type="text" id="node-input-account">
+    </div>
+    <div class="form-row">
+        <label for="node-input-keyFilename"><i class="fa fa-user"></i> Key File</label>
+        <input type="text" id="node-input-keyFilename">
+    </div>
+    <div class="form-row">
+        <label for="node-input-subscription"><i class="fa fa-bars"></i> Subscription</label>
+        <input type="text" id="node-input-subscription">
+    </div>
+    <div>
+        <label for="node-input-assumeJSON"><i class="fa fa-code"></i> Assume JSON&nbsp;
+            <input type="checkbox" id="node-input-assumeJSON" style="vertical-align: top;">
+        </label>
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="google-cloud-pubsub receive">
+    <p>Connects to <a href="https://cloud.google.com/pubsub/docs/" target="_blank">Google Cloud Pub/Sub</a> and subscribes to a specific topic.</p>
+    <h3>Outputs</h3>
+    <dl class="message-properties">
+        <dt>msg.payload
+            <span class="property-type">PubSub Message</span>
+        </dt>
+        <dd>The data from the Pub/Sub message.</dd>     
+    </dl>
+    <h3>Parameters</h3>
+    <p>[Credentials]: The service account in json format for allowing the acces to the </p>
+    <p>[Key File]: The full path to the file with the service acoount information (.json)</p>
+    <p>[Subscription]: The name of the subscription in GCP PubSub to be subscribed to.</p>
+    <p>[Assume JSON]: Check it if the incomming message are in JSON format to be formated to a JSON object </p>
+</script>
+
+<script type="text/javascript">
+RED.nodes.registerType("google-cloud-pubsub receive", {
+    category: "GCP IoT",
+    defaults: {
+        account: { type: "google-cloud-credentials", required: false },
+        keyFilename: {value: "", required: false },
+        subscription: { required: true },
+        assumeJSON: {value: false, required: false },
+        name: { value: "", required: false }
+    },
+    inputs: 0,
+    outputs: 1,
+    icon: "pubsub.png",
+    align: "left",
+    color: "#3FADB5",
+    label: function () {
+        return this.name || this.topic || "pubsub";
+    },
+    paletteLabel: "pubsub"
+});
+</script>
