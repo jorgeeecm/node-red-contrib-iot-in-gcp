@@ -89,7 +89,6 @@ module.exports = function(RED) {
 
         this.connect = function () {
 
-            node.log(RED._("google-cloud-iotcore broker"));
             if (!node.connected && !node.connecting) {
                 
                 node.status(STATUS_CONNECTING);
@@ -97,7 +96,6 @@ module.exports = function(RED) {
 
                 node.client = mqtt.connect(node.options);
                 node.client.setMaxListeners(0);
-                node.log(RED._("google-cloud-iotcore broker2"));
 
                 // Register successful connect or reconnect handler
                 node.client.on('connect', function () {
@@ -144,9 +142,7 @@ module.exports = function(RED) {
         };
 
         this.publish = function (msg) {
-            node.log(RED._("google-cloud-iotcore start sending..."));
             if (node.connected) {
-                node.log(RED._("google-cloud-iotcore starting sending..."));
                 if (!Buffer.isBuffer(msg.payload)) {
                     if (typeof msg.payload === "object") {
                         msg.payload = JSON.stringify(msg.payload);
@@ -168,7 +164,6 @@ module.exports = function(RED) {
                     }
                     return
                 });
-                node.log(RED._("google-cloud-iotcore published"));
             }
         };
 
@@ -237,7 +232,6 @@ module.exports = function(RED) {
                 } 
 
                 if (msg.hasOwnProperty("payload")) {
-                    node.log(RED._("google-cloud-iotcore sending..."));
                     this.brokerConn.publish(msg);  // send the message
                 }
                 else{

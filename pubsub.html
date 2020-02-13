@@ -4,7 +4,7 @@
         <input type="text" id="node-input-account">
     </div>
     <div class="form-row">
-        <label for="node-input-keyFilename"><i class="fa fa-user"></i> Key File</label>
+        <label for="node-input-keyFilename"><i class="fa fa-file"></i> Key File</label>
         <input type="text" id="node-input-keyFilename">
     </div>
     <div class="form-row">
@@ -54,8 +54,65 @@ RED.nodes.registerType("google-cloud-pubsub receive", {
     align: "left",
     color: "#3FADB5",
     label: function () {
-        return this.name || this.topic || "pubsub";
+        return this.name || "pubsub";
     },
-    paletteLabel: "pubsub"
+    paletteLabel: "pubsub receive"
 });
 </script>
+
+<script type="text/x-red" data-template-name="google-cloud-pubsub send">
+    <div class="form-row">
+        <label for="node-input-account"><i class="fa fa-user"></i> Credentials</label>
+        <input type="text" id="node-input-account">
+    </div>
+    <div class="form-row">
+        <label for="node-input-keyFilename"><i class="fa fa-file"></i> Key File</label>
+        <input type="text" id="node-input-keyFilename">
+    </div>
+    <div class="form-row">
+        <label for="node-input-topic"><i class="fa fa-comment"></i> Topic</label>
+        <input type="text" id="node-input-topic">
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="google-cloud-pubsub send">
+    <p>Connects to <a href="https://cloud.google.com/pubsub/docs/" target="_blank">Google Cloud Pub/Sub</a> and publishes messages to a specified topic.</p>
+    <h3>Inputs</h3>
+
+    <dl class="message-properties">
+        <dt>msg.payload
+            <span class="property-type">String or Buffer</span>
+        </dt>
+        <dd>the data for the Pub/Sub message.</dd>
+    </dl>
+    <h3>Parameters</h3>
+    <p>[Credentials]: The service account in json format for allowing the acces to the </p>
+    <p>[Key File]: The full path to the file with the service acoount information (.json)</p>
+    <p>[Topic]: The topic where the message will be published in.</p>
+</script>
+
+<script type="text/javascript">
+RED.nodes.registerType("google-cloud-pubsub send", {
+    category: "GCP IoT",
+    defaults: {
+        account: { type: "google-cloud-credentials", required: false },
+        keyFilename: {value: "", required: false },
+        topic: { value: "", required: true },
+        name: { value: "", required: false }
+    },
+    inputs: 1,
+    outputs: 0,
+    icon: "pubsub.png",
+    align: "right",
+    color: "#3FADB5",
+    label: function () {
+        return this.name || this.topic || "pubsub";
+    },
+    paletteLabel: "pubsub send"
+});
+</script>
+

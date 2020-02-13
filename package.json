@@ -1,6 +1,6 @@
 {
     "name": "node-red-contrib-iot-in-gcp",
-    "version": "0.0.0",
+    "version": "0.1.0",
     "description": "Node-RED nodes for IoT in Google Cloud Platform",
     "dependencies": {
         "@google-cloud/bigquery": "latest",
@@ -24,10 +24,14 @@
     "node-red": {
         "nodes": {
             "google-cloud-credentials": "credentials.js",
-            "google-cloud-pubsub receive": "pubsub.js",
+            "google-cloud-pubsub": "pubsub.js",
             "google-cloud-iotcore device": "iotcore-device.js",
             "google-cloud-bigquery": "bigquery.js"
         }
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/jorgeeecm/node-red-contrib-iot-in-gcp/"
     },
     "license": "Apache-2.0",
     "author": "Jorge Castilla"
