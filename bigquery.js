@@ -3,6 +3,13 @@ module.exports = function(RED) {
     const {BigQuery} = require('@google-cloud/bigquery');
     let bigquery;
 
+    /**
+     * Extract JSON service account key from "google-cloud-credentials" config node.
+    */
+    function GetCredentials(node) {
+        return JSON.parse(RED.nodes.getCredentials(node).account);
+    }
+
     //[START BIGQUERY QUERYING]
     function BigQueryRetrieve(config) {
         RED.nodes.createNode(this, config);
@@ -15,13 +22,7 @@ module.exports = function(RED) {
             credentials = GetCredentials(config.account);
         }
 
-        /**
-         * Extract JSON service account key from "google-cloud-credentials" config node.
-         */
         
-        function GetCredentials(node) {
-            return JSON.parse(RED.nodes.getCredentials(node).account);
-        }
 
         // Called when a message arrives at the node.
         async function Input(msg) {
@@ -85,6 +86,9 @@ module.exports = function(RED) {
         const node = this;
 
         var credentials = null;
+        if (config.account) {
+            credentials = GetCredentials(config.account);
+        }
 
         async function insertRowsAsStream(msg) {
 
