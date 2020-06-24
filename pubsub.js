@@ -36,6 +36,10 @@ module.exports = function(RED) {
         if (config.account) {
             credentials = GetCredentials(config.account);
         }
+		let projectId = config.projectId;
+        if (!projectId || projectId.trim().length == 0) {
+            projectId = null;
+        }
         const keyFilename = config.keyFilename;
 
         RED.nodes.createNode(this, config);
@@ -91,14 +95,18 @@ module.exports = function(RED) {
         // is an error.  If both are supplied, then credentials will be used.
         if (credentials) {
             pubsub = new PubSub({
+				"projectId": projectId,
                 "credentials": credentials
             });
         } else if (keyFilename) {
             pubsub = new PubSub({
+				"projectId": projectId,
                 "keyFilename": keyFilename
             });
         } else {
-            pubsub = new PubSub({});
+            pubsub = new PubSub({
+				"projectId": projectId,
+			});
         }
 
         node.status(STATUS_CONNECTING);                              // Flag the node as connecting.
