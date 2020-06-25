@@ -105,7 +105,7 @@ module.exports = function(RED) {
             });
         } else {
             pubsub = new PubSub({
-                "projectId": projectId,
+                "projectId": projectId
 			});
         }
 
