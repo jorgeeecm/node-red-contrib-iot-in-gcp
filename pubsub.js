@@ -36,7 +36,7 @@ module.exports = function(RED) {
         if (config.account) {
             credentials = GetCredentials(config.account);
         }
-		let projectId = config.projectId;
+        let projectId = config.projectId;
         if (!projectId || projectId.trim().length == 0) {
             projectId = null;
         }
@@ -95,17 +95,17 @@ module.exports = function(RED) {
         // is an error.  If both are supplied, then credentials will be used.
         if (credentials) {
             pubsub = new PubSub({
-				"projectId": projectId,
+                "projectId": projectId,
                 "credentials": credentials
             });
         } else if (keyFilename) {
             pubsub = new PubSub({
-				"projectId": projectId,
+                "projectId": projectId,
                 "keyFilename": keyFilename
             });
         } else {
             pubsub = new PubSub({
-				"projectId": projectId,
+                "projectId": projectId,
 			});
         }
 
