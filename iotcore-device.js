@@ -251,9 +251,9 @@ module.exports = function(RED) {
                     node.send([msg,]);
                 } else if (topic === `/devices/${node.brokerConn.deviceId}/commands`) {
                     node.send([,msg]);
+                } else {
+                    node.log(RED._(`google-cloud-iotcore: ${message} have been send with the incorrect topic ${topic}`));
                 }
-
-                node.log(RED._(`google-cloud-iotcore: ${message} have been send with the incorrect topic ${topic}`));
             });          
             
 
