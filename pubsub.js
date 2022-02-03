@@ -19,6 +19,12 @@ module.exports = function(RED) {
         text:  "connecting"
     };
 
+    const STATUS_PUBLISHING = {
+        fill: "blue",
+        shape: "dot",
+        text: "publishing"
+    };
+
     const {PubSub} = require("@google-cloud/pubsub");
 
     /**
