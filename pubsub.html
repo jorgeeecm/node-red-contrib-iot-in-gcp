@@ -38,6 +38,7 @@
     <h3>Parameters</h3>
     <p>[Credentials]: The service account in json format for allowing the acces to the </p>
     <p>[Key File]: The full path to the file with the service acoount information (.json)</p>
+    <p>[Project]: The project ID where subscription is configured.</p>
     <p>[Subscription]: The name of the subscription in GCP PubSub to be subscribed to.</p>
     <p>[Assume JSON]: Check it if the incomming message are in JSON format to be formated to a JSON object </p>
 </script>
@@ -75,6 +76,10 @@ RED.nodes.registerType("google-cloud-pubsub receive", {
         <input type="text" id="node-input-keyFilename">
     </div>
     <div class="form-row">
+        <label for="node-input-projectId"><i class="fa fa-cloud"></i> Project</label>
+        <input type="text" id="node-input-projectId">
+    </div>
+    <div class="form-row">
         <label for="node-input-topic"><i class="fa fa-comment"></i> Topic</label>
         <input type="text" id="node-input-topic">
     </div>
@@ -97,6 +102,7 @@ RED.nodes.registerType("google-cloud-pubsub receive", {
     <h3>Parameters</h3>
     <p>[Credentials]: The service account in json format for allowing the acces to the </p>
     <p>[Key File]: The full path to the file with the service acoount information (.json)</p>
+    <p>[Project]: The project ID where topic is configured.</p>
     <p>[Topic]: The topic where the message will be published in.</p>
 </script>
 
@@ -106,6 +112,7 @@ RED.nodes.registerType("google-cloud-pubsub send", {
     defaults: {
         account: { type: "google-cloud-credentials", required: false },
         keyFilename: {value: "", required: false },
+	projectId: { value: "", required: false},
         topic: { value: "", required: true },
         name: { value: "", required: false }
     },
